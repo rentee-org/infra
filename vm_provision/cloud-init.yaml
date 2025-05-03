@@ -1,0 +1,17 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - docker.io
+  - docker-compose
+
+runcmd:
+  - systemctl start docker
+  - mkdir -p /opt/rentee
+  - echo "${DOCKER_COMPOSE_CONTENT}" > /opt/rentee/docker-compose.yml
+  - docker-compose -f /opt/rentee/docker-compose.yml up -d
+  # - apt-get install -y docker.io docker-compose
+  # - mkdir -p /opt/rentee
+  # - curl -fsSL https://get.docker.com | sh
+  # - echo "${docker_compose_file}" > /opt/rentee/docker-compose.yml
+  # - docker compose -f /opt/rentee/docker-compose.yml up -d
